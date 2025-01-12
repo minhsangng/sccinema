@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="assets/img/logov2.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/css/component.css">
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/grid.css">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Monoton&family=Open+Sans:ital,wght@0,400;1,300&family=Playfair+Display:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&family=Shizuru&display=swap"
+        rel="stylesheet">
+
+    <!-- LINK CAROUSEL -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+
+    <!-- BOX ICON  -->
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="assets/fontawesome-free-5.15.4-web/css/all.min.css"> -->
+    <!-- <link rel="stylesheet" href="themify-icons/themify-icons.css"> -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        .logo img {
+            width: 90px;
+        }
+        
+        .boxoffice {
+            width: 200px;
+        }
+
+        @media (max-width: 850px) {
+            .logo img {
+                width: 50px;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+            
+            .boxoffice {
+                width: 180px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .logo img {
+                width: 30px;
+            }
+            
+            .boxoffice {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAV -->
+    <div class="menu-tablet" id="menu-tablet">
+        <ul class="menu-tb-list">
+            <li><a href="index.php">
+                    Trang chủ
+                </a></li>
+            <li><a href="index.php?p=showtime">
+                    Lịch chiếu
+                </a></li>
+            <li><a href="index.php?p=food">
+                    Bắp nước
+                </a></li>
+            <li><a href="index.php?p=ticket">
+                    Đặt vé
+                </a></li>
+            <li><a href="index.php?p=promotion">
+                    Khuyến mãi
+                </a></li>
+            <li><a href="index.php?p=account">
+                    Tài khoản
+                </a></li>
+        </ul>
+    </div>
+
+    <div class="progress-bar" id="progress-bar" style="z-index: 9999;">
+        <a href="javascript:void(0)" id="progress-val" onclick="
+                  let scrollInterval = setInterval(function () {
+                       if (window.scrollY !== 0) window.scrollBy(0, -window.scrollY / 10);
+                       else clearInterval(scrollInterval);
+                  }, 10);">
+            <ion-icon name="logo-foursquare"></ion-icon>
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="nav">
+            <a href="index.php" class="logo">
+                <img style="margin-right: 10px;" src="assets/img/logov2.png" />
+            </a>
+
+            <select name="" id="" class="search-box boxoffice">
+                <option value="">Chọn rạp</option>
+                <option value="">-- -- -- --</option>
+                <option value="">SC Cinema - Gò Vấp</option>
+                <option value="">SC Cinema - Bình Thạnh</option>
+            </select>
+
+            <form action="" method="" class="search-box">
+                <input type="text" name="search" placeholder="Tìm theo tên phim, diễn viên, ....." class="nav-search">
+                <button type="submit">
+                    <i class='bx bx-search-alt'></i>
+                </button>
+            </form>
+
+            <div class="nav-sign">
+                <a href="#" class="btn btn-hover">
+                    <span>Đăng nhập</span>
+                </a>
+
+            </div>
+            <div class="menu-toggle">
+                <ion-icon name="menu-outline" class="open"></ion-icon>
+                <ion-icon name="close-outline" class="close"></ion-icon>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-wrapper">
+        <ul class="nav-menu" id="nav-menu">
+            <li class="nav-item" id="home">
+                <a href="index.php">
+                    <span class="nav-icon"><ion-icon name="home-outline"></ion-icon></span>
+                    Trang chủ
+                </a>
+            </li>
+
+            <li class="nav-item" id="showtime">
+                <a href="index.php?p=showtime">
+                    <span class="nav-icon"><ion-icon name="film-outline"></ion-icon></span>
+                    Lịch chiếu </a>
+            </li>
+            <li class="nav-item" id="food">
+                <a href="index.php?p=food">
+                    <span class="nav-icon"><ion-icon name="fast-food-outline"></ion-icon></span>
+                    Bắp nước
+                </a>
+            </li>
+
+            <li class="nav-item" id="ticket">
+                <a href="index.php?p=ticket">
+                    <span class="nav-icon"><ion-icon name="ticket-outline"></ion-icon></span>
+                    Đặt vé
+                </a>
+            </li>
+
+            <li class="nav-item" id="promotion">
+                <a href="index.php?p=promotion">
+                    <span class="nav-icon"><ion-icon name="gift-outline"></ion-icon></span>
+                    Khuyến mãi
+                </a>
+            </li>
+
+            <li class="nav-item" id="account">
+                <a href="index.php?p=account">
+                    <span class="nav-icon"><ion-icon name="person-outline"></ion-icon></span>
+                    Tài khoản
+                </a>
+            </li>
+
+        </ul>
+    </div>

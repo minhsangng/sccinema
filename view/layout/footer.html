@@ -1,0 +1,188 @@
+<footer class="footer">
+    <div class="section-wrapper">
+        <div class="row ">
+            <div class="col-6 footer-header">
+                <a href="#" class="logo">
+                    <img style="margin-right: 10px; width: 80px;" src="assets/img/logov2.png" />
+                </a>
+
+                <p class="description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quas, possimus eius. Deserunt non odit, cum vero reprehenderit
+                    laudantium odio vitae autem quam, incidunt molestias ratione mollitia accusantium,
+                    facere ab suscipit.
+                </p>
+                <div class="social-list">
+                    <a href="#" class="social-item">
+                        <i class="bx bxl-facebook"></i>
+                    </a>
+                    <a href="#" class="social-item">
+                        <i class="bx bxl-instagram"></i>
+                    </a>
+                    <a href="#" class="social-item">
+                        <i class="bx bxl-twitter"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-12 footer-item">
+                <div class="row">
+                    <div class="col-4 align-items-center">
+                        <div class="content">
+                            <p class="main-color" style="font-size: 1.2rem;"><b>Flix</b></p>
+                            <ul class="footer-menu">
+                                <li><a href="#"> About us</a></li>
+                                <li><a href="#"> My profile</a></li>
+                                <li><a href="#"> Pricing plans</a></li>
+                                <li><a href="#"> Contacts</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="col-4 align-items-center">
+                        <div class="content">
+                            <p class="main-color" style="font-size: 1.2rem;"><b>Browse</b></p>
+                            <ul class="footer-menu">
+                                <li><a href="#">Live TV</a></li>
+                                <li><a href="#">Live Movies</a></li>
+                                <li><a href="#">Live Series</a></li>
+                                <li><a href="#">Streaming Library</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-4 align-items-center">
+                        <div class="content">
+                            <p class="main-color" style="font-size: 1.2rem;"><b>Help</b></p>
+                            <ul class="footer-menu">
+                                <li><a href="#">Account & Billing</a></li>
+                                <li><a href="#">Plans & Pricing</a></li>
+                                <li><a href="#">Supported devices</a></li>
+                                <li><a href="#">Accessibility</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="src/js/main.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let navItem = document.querySelectorAll(".nav-item");
+        let params = new URLSearchParams(window.location.search);
+        let currentPage = params.get("p");
+        
+        navItem.forEach(item => {
+            if (item.id === (currentPage || "home")) {
+                item.classList.add("active");
+            }
+        });
+    });
+
+    // DATA
+    async function fetchAllPages(baseUrl, maxPages) {
+        let allMovies = [];
+        let thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+
+        for (let page = 1; page <= maxPages; page++) {
+            let url = `${baseUrl}${page}`;
+            try {
+                let response = await fetch(url);
+                if (!response.ok) {
+                    console.error(`Failed to fetch page ${page}:`, response.statusText);
+                    break;
+                }
+                let data = await response.json();
+
+                if (data.items && data.items.length > 0) {
+                    for (let item of data.items) {
+                        if (item.tmdb.type === "movie") {
+                            let detailUrl = `https://ophim1.com/phim/${item.slug}`;
+                            let detailResponse = await fetch(detailUrl);
+                            if (detailResponse.ok) {
+                                let detailData = await detailResponse.json();
+                                if (detailData.movie.chieurap === true) {
+                                    let movieDate = new Date(detailData.movie.created.time);
+                                    let day = movieDate.getDate().toString().padStart(2, "0");
+                                    let month = (movieDate.getMonth() + 1).toString().padStart(2, "0");
+                                    let year = movieDate.getFullYear();
+
+                                    let formattedDate = `${day}/${month}/${year}`;
+
+                                    if (movieDate >= thirtyDaysAgo) {
+                                        let movie = {
+                                            id: detailData.movie._id,
+                                            slug: detailData.movie.slug,
+                                            date: formattedDate,
+                                            thumb_url: detailData.movie.thumb_url,
+                                            poster_url: detailData.movie.poster_url,
+                                            name: detailData.movie.name,
+                                            origin_name: detailData.movie.origin_name,
+                                            content: detailData.movie.content ? detailData.movie.content.replace(/<\/?p>/g, "") : "",
+                                            type: detailData.movie.type,
+                                            trailer_url: detailData.movie.trailer_url.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/"),
+                                            time: detailData.movie.time,
+                                            quality: detailData.movie.quality,
+                                            actor: detailData.movie.actor ? detailData.movie.actor.join(", ") : "",
+                                            director: detailData.movie.director ? detailData.movie.director.join(", ") : "",
+                                            category: detailData.movie.category ? detailData.movie.category.map(c => c.name).join(", ") : "",
+                                            country: detailData.movie.country.name,
+                                            vote_average: detailData.movie.tmdb.vote_average
+                                        };
+
+                                        allMovies.push(movie);
+                                    }
+                                }
+                            } else {
+                                console.error(
+                                    `Failed to fetch details for ${item.slug}:`,
+                                    detailResponse.statusText
+                                );
+                            }
+                        }
+                    }
+                } else {
+                    break;
+                }
+            } catch (error) {
+                console.error(`Error fetching page ${page}:`, error);
+                break;
+            }
+        }
+
+        // Gửi dữ liệu thu thập được về server (PHP) để lưu vào file
+        if (allMovies.length > 0) {
+            try {
+                let saveResponse = await fetch("", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(allMovies),
+                });
+
+                if (saveResponse.ok) {
+                    let result = await saveResponse.json();
+                    console.log(result.message);
+                } else {
+                    console.error("Error saving data:", saveResponse.statusText);
+                }
+            } catch (error) {
+                console.error("Error sending data to server:", error);
+            }
+        } else {
+            console.log("No movies found matching the criteria.");
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        /* fetchAllPages("https://ophim1.com/danh-sach/phim-moi-cap-nhat?page=", 1178); */
+    });
+</script>
+</body>
+
+</html>

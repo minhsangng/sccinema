@@ -1,0 +1,1 @@
+<title>Phim sắp chiếu - SC Cinema | Đặt vé xem phim trực tuyến</title>
