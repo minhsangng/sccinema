@@ -1,7 +1,7 @@
 <?php
     class Database {
         public function connect() {
-            $conn = new mysqli("localhost", "root", "", "domdom");
+            $conn = new mysqli("localhost", "root", "", "sccinema");
             
             if (!$conn) {
                 echo "Kết nối lỗi".mysqli_connect_error();

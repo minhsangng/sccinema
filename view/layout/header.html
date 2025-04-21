@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="assets/img/logov2.png">
+    <link rel="shortcut icon" href="assets/img/ico.png">
 
     <!-- CSS -->
     <link rel="stylesheet" href="src/css/component.css">
@@ -32,14 +32,15 @@
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="assets/fontawesome-free-5.15.4-web/css/all.min.css"> -->
     <!-- <link rel="stylesheet" href="themify-icons/themify-icons.css"> -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         .logo img {
             width: 90px;
         }
-        
+
         .boxoffice {
             width: 200px;
         }
@@ -52,9 +53,13 @@
             .logo {
                 font-size: 1.8rem;
             }
-            
+
             .boxoffice {
-                width: 180px;
+                width: 150px;
+            }
+
+            .search-box {
+                max-width: 220px;
             }
         }
 
@@ -62,9 +67,9 @@
             .logo img {
                 width: 30px;
             }
-            
+
             .boxoffice {
-                width: 100px;
+                width: 140px;
             }
         }
     </style>
@@ -101,14 +106,15 @@
                        if (window.scrollY !== 0) window.scrollBy(0, -window.scrollY / 10);
                        else clearInterval(scrollInterval);
                   }, 10);">
-            <ion-icon name="logo-foursquare"></ion-icon>
+            <ion-icon name="arrow-up-circle-outline"></ion-icon>
         </a>
     </div>
 
     <div class="container">
-        <div class="nav">
-            <a href="index.php" class="logo">
-                <img style="margin-right: 10px;" src="assets/img/logov2.png" />
+        <div class="nav flex justify-between w-screen">
+            <a href="index.php" class="logo relative mr-14">
+                <img style="margin-right: 10px;" src="assets/img/ico.png" />
+                <h1 class="text-3xl absolute bottom-2 -right-20 text-[#7f1338]"> Cinema</h1>
             </a>
 
             <select name="" id="" class="search-box boxoffice">
@@ -126,7 +132,7 @@
             </form>
 
             <div class="nav-sign">
-                <a href="#" class="btn btn-hover">
+                <a href="view/page/signin/index.php" class="btn btn-hover">
                     <span>Đăng nhập</span>
                 </a>
 

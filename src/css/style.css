@@ -416,7 +416,7 @@ a.movie-item:hover {
 
 .item-content-wrapper {
      padding-left: 5rem;
-     width: 40%;
+     width: 100%;
      background-color: rgba(0, 0, 0, .8);
      display: flex;
      flex-direction: column;
@@ -443,8 +443,6 @@ a.movie-item:hover {
      opacity: 0;
      animation:  top-down  1s .4s ease-in-out forwards;
 }
-
-
 
 .movies-infors {
      display: flex;
@@ -737,18 +735,6 @@ a.movie-item:hover {
      overflow: hidden;
 }
 
-/* .btn-load-2 {
-     position: absolute;
-     right: 0;
-     font-size: 1.2rem;
-     font-weight: 600;
-     padding: 6px 10px;
-     border-radius: 5px;
-     background-color: var(--second-color);
-     overflow: hidden;
-     transition: all .4s ease-in-out;
-} */
-
 .btn-load::before {
      content: "";
      position: absolute;
@@ -850,8 +836,6 @@ a.movie-item:hover {
 
 /* FOOTER */
 
-
-
 .footer {
      padding-top: 10rem;
 }
@@ -947,8 +931,6 @@ a.movie-item:hover {
      cursor: pointer;
 }
 
-
-
 #progress-val {
      width: calc(100% - 5px);
      height: calc(100% - 5px);
@@ -973,8 +955,6 @@ a.movie-item:hover {
      }
 }
 
-
-
 @keyframes ring {
      0% {
           transform: rotate(0deg);
@@ -991,11 +971,11 @@ a.movie-item:hover {
 
      }
 }
+
 .to-top {
      transform: translateY(100px);
      opacity: 0;
 }
-
 
 .to-top.show {
      transform: translateY(0);
@@ -1044,9 +1024,7 @@ a.movie-item:hover {
      width: 28%;
 }
 
-
 /* MOBILE NAVIGATION */
-
 
 .navigation {
      max-width: 360px;
@@ -1069,7 +1047,6 @@ a.movie-item:hover {
      position: absolute;
      
 }
-
 
 .navigation ul li {
      position: relative;

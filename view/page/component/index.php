@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <?php
 error_reporting(1);
+include_once("../../../model/connect.php");
+include_once("../../../model/mAPI.php");
+include_once("../../../controller/cAPI.php");
 
-$jsonData = file_get_contents("../../../data.json");
+$ctrlAPI = new cAPI();
 
-$all_movies = json_decode($jsonData, true);
+$response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPI.php");
 
-foreach ($all_movies as $movie) {
-     if ($_GET["id"] == $movie["id"])
-          $detailMovie = $movie;
+foreach ($response as $movie) {
+     if ($movie->id == $_GET["id"])
+          $result[] = $movie;
 }
 ?>
 
@@ -18,9 +22,9 @@ foreach ($all_movies as $movie) {
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-     <title><?php echo $movie["name"]; ?> - SC Cinema | Đặt vé xem phim trực tuyến</title>
+     <title><?php echo (!empty($result[0]) ? $result[0]->title : ""); ?> - SC Cinema | Đặt vé xem phim trực tuyến</title>
 
-     <link rel="shortcut icon" href="../../../assets/img/logo.png">
+     <link rel="shortcut icon" href="../../../assets/img/ico.png">
 
      <!-- CSS -->
      <link rel="stylesheet" href="../../../src/css/style.css">
@@ -54,15 +58,14 @@ foreach ($all_movies as $movie) {
                        if (window.scrollY !== 0) window.scrollBy(0, -window.scrollY / 10);
                        else clearInterval(scrollInterval);
                   }, 10);">
-               <ion-icon name="logo-foursquare"></ion-icon>
+               <ion-icon name="arrow-up-circle-outline"></ion-icon>
           </a>
      </div>
 
      <div class="container">
           <div class="nav bg-color">
                <a href="index.html" class="logo">
-                    <img style="margin-right: 10px; width: 80px;" src="../../../assets/img/logo.png" />SC <span
-                         class="main-color"> Cinema</span>
+                    <img style="margin-right: 10px; width: 80px;" src="../../../assets/img/ico.png" />
                </a>
 
                <form action="" class="search-box">
@@ -90,27 +93,27 @@ foreach ($all_movies as $movie) {
      <section class="movie-banner">
           <div class="hero-wrapper">
                <div class="movie-banner-item">
-                    <img <?php echo "src='" . $detailMovie["poster_url"] . "' alt='" . $detailMovie["name"] . "'"; ?> />
+                    <img <?php echo "src='" . $result[0]->thumbnail_url . "' alt='" . $result[0]->title . "'"; ?> />
                </div>
 
                <div class="movie-card">
-                    <img <?php echo "src='" . $detailMovie["thumb_url"] . "' alt='" . $detailMovie["name"] . "'"; ?> />
+                    <img <?php echo "src='" . $result[0]->poster_url . "' alt='" .  $result[0]->title . "'"; ?> />
 
                     <div class="movie-card-content">
-                         <h2><?php echo $detailMovie["name"]; ?></h2>
+                         <h2><?php echo $result[0]->title; ?></h2>
 
                          <ul class="movie-card-btns">
                               <?php
-                              foreach (explode(", ", $detailMovie["category"]) as $cate) {
+                              foreach (explode(", ", $result[0]->genres) as $g) {
                                    echo "<li class='movie-card-btn'>
-                                             " . $cate . "
+                                             " . $g . "
                                         </li>";
                               }
                               ?>
                          </ul>
 
                          <p class="movie-card-description">
-                              <?php echo $detailMovie["content"]; ?>
+                              <?php echo $result[0]->summary; ?>
                          </p>
 
                          <h3 style="font-size: 2rem;">Lịch chiếu phim</h3>
@@ -150,7 +153,7 @@ foreach ($all_movies as $movie) {
           <div class="trailer-title">
                <h3>official trailer</h3>
           </div>
-          <iframe width="560" height="315" src="<?php echo str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", $detailMovie["trailer_url"]); ?>" title="YouTube video player"
+          <iframe width="560" height="315" src="<?php echo str_replace("https://youtu.be/", "https://www.youtube.com/embed/", $result[0]->trailer_url); ?>" title="<?=$result[0]->title?>"
                frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                allowfullscreen></iframe>
      </section>
@@ -160,8 +163,7 @@ foreach ($all_movies as $movie) {
                <div class="row">
                     <div class="col-6 footer-header">
                          <a href="#" class="logo">
-                              <img style="margin-right: 10px; width: 80px;" src="../../../assets/img/logo.png" />SC <span
-                                   class="main-color"> Cinema</span>
+                              <img style="margin-right: 10px; width: 80px;" src="../../../assets/img/ico.png" />
                          </a>
 
                          <p class="description">

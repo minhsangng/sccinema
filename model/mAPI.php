@@ -1,29 +1,27 @@
 <?php
-include_once("connect.php");
-
 class mAPI
 {
     public function mExportAPI()
     {
         $p = new Database;
         $conn = $p->connect();
-        $sql = "";
+        $sql = "SELECT * FROM movies";
 
         if (!$conn)
             return false;
         return $conn->query($sql);
     }
 
-    public function mImportAPI($data)
+    public function mCallAPI($url)
     {
-        $p = new Database;
-        $conn = $p->connect();
-        $sql = "";
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($curl);
 
-        if (!$conn)
+        if (!$result)
             return false;
-        return $conn->query($sql);
+        else
+            return json_decode($result);
     }
 }
-;
 ?>
