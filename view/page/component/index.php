@@ -9,12 +9,10 @@ include_once("../../../controller/cAPI.php");
 
 $ctrlAPI = new cAPI();
 
-$response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPI.php");
-
-foreach ($response as $movie) {
-     if ($movie->id == $_GET["id"])
-          $result[] = $movie;
-}
+if (isset($_GET["id"]))
+     $id = $_GET["id"];
+     
+$response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php?id=".$id);
 ?>
 
 <head>
@@ -93,18 +91,18 @@ foreach ($response as $movie) {
      <section class="movie-banner">
           <div class="hero-wrapper">
                <div class="movie-banner-item">
-                    <img <?php echo "src='" . $result[0]->thumbnail_url . "' alt='" . $result[0]->title . "'"; ?> />
+                    <img <?php echo "src='" . $response[0]->thumbnail_url . "' alt='" . $response[0]->title . "'"; ?> />
                </div>
 
                <div class="movie-card">
-                    <img <?php echo "src='" . $result[0]->poster_url . "' alt='" .  $result[0]->title . "'"; ?> />
+                    <img <?php echo "src='" . $response[0]->poster_url . "' alt='" .  $response[0]->title . "'"; ?> />
 
                     <div class="movie-card-content">
-                         <h2><?php echo $result[0]->title; ?></h2>
+                         <h2><?php echo $response[0]->title; ?></h2>
 
                          <ul class="movie-card-btns">
                               <?php
-                              foreach (explode(", ", $result[0]->genres) as $g) {
+                              foreach (explode(", ", $response[0]->genres) as $g) {
                                    echo "<li class='movie-card-btn'>
                                              " . $g . "
                                         </li>";
@@ -113,7 +111,7 @@ foreach ($response as $movie) {
                          </ul>
 
                          <p class="movie-card-description">
-                              <?php echo $result[0]->summary; ?>
+                              <?php echo $response[0]->summary; ?>
                          </p>
 
                          <h3 style="font-size: 2rem;">Lịch chiếu phim</h3>
@@ -153,7 +151,7 @@ foreach ($response as $movie) {
           <div class="trailer-title">
                <h3>official trailer</h3>
           </div>
-          <iframe width="560" height="315" src="<?php echo str_replace("https://youtu.be/", "https://www.youtube.com/embed/", $result[0]->trailer_url); ?>" title="<?=$result[0]->title?>"
+          <iframe width="560" height="315" src="<?php echo str_replace("https://youtu.be/", "https://www.youtube.com/embed/", $response[0]->trailer_url); ?>" title="<?=$result[0]->title?>"
                frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                allowfullscreen></iframe>
      </section>

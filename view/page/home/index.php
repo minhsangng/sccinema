@@ -11,7 +11,7 @@
      <!-- BIG SLIDES -->
      <div class="big-slider" id="big-slider">
           <?php
-          $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPI.php");
+          $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php");
 
           if ($response) {
                $index = 0;
@@ -90,8 +90,6 @@
 
           <div class="movies-slide row">
                <?php
-               /* $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPI.php"); */
-
                if ($response) {
                     $now = date("d/m/y");
                     $index = 0;
@@ -158,11 +156,9 @@
 
           <div class="movies-slide row" id="tv-slider">
                <?php
-               /* $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPI.php"); */
-
                if ($response) {
                     $now = date("Y-m-d");
-                    $index = 0;
+                    $n = 0;
                     foreach ($response as $movie) {
                          $movieDate = (int) strtotime($movie->release_date);
                          $currentDate = (int) strtotime($now);
@@ -187,15 +183,11 @@
                                         
                                         <div class='movie-item-overlay'></div>
                                    </a>";
-                              $index++;
+                              $n++;
                          }
 
-                         if ($index > 5)
+                         if ($n > 5)
                               break;
-                    }
-                    
-                    if ($index <= 5) {
-                         echo "Không có dữ liệu";
                     }
                } else
                     echo "Không có dữ liệu";

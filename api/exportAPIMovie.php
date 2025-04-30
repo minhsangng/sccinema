@@ -7,5 +7,8 @@
     
     $ctrlAPI = new cAPI();
     
-    $ctrlAPI->cExportAPI();
+    if (isset($_GET["id"])) {
+        $id = $_GET["id"];
+        $ctrlAPI->cExportAPIMovie("SELECT * FROM movies WHERE id = $id");
+    } else $ctrlAPI->cExportAPIMovie("SELECT * FROM movies");
 ?>

@@ -1,17 +1,29 @@
 <?php
 class mAPI
 {
-    public function mExportAPI()
+    /* Danh sách phim */
+    public function mExportAPIMovie($sql)
     {
         $p = new Database;
         $conn = $p->connect();
-        $sql = "SELECT * FROM movies";
 
         if (!$conn)
             return false;
         return $conn->query($sql);
     }
-
+    
+    /* Lịch chiếu */
+    public function mExportAPIShowtime($sql)
+    {
+        $p = new Database;
+        $conn = $p->connect();
+        
+        if (!$conn)
+            return false;
+        return $conn->query($sql);
+    }
+    
+    /* Gọi API */
     public function mCallAPI($url)
     {
         $curl = curl_init($url);

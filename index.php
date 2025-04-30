@@ -23,6 +23,4 @@
      else include_once("view/page/".$p."/index.php");
      
      include_once("view/layout/footer.html");
-     
-     include("");
 ?>
