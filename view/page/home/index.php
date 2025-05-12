@@ -7,11 +7,11 @@
 </style>
 
 <!-- SLIDE SECTION -->
-<div class="big-section" id="big-section">
+<div class="ml-[200px] mr-[110px]" id="big-section">
      <!-- BIG SLIDES -->
      <div class="big-slider" id="big-slider">
           <?php
-          $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php");
+          $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php?status=1&top=true");
 
           if ($response) {
                $index = 0;
@@ -37,7 +37,7 @@
                                    </div>
                                    <div class='movies-infor'>
                                         <ion-icon name='cube-outline'></ion-icon>
-                                        <span>" . $movie->release_date . "</span>
+                                        <span>" . $movie->age_rating . "</span>
                                    </div>
                               </div>
 
@@ -67,7 +67,7 @@
 
           ?>
 
-          <ul class="slide-control">
+          <ul class="slide-control ml-[200px] mr-[110px]">
                <li class="slide-prev">
                     <ion-icon name="chevron-back-outline"></ion-icon>
                </li>
@@ -82,14 +82,16 @@
 <!--END SLIDE SECTION -->
 
 <!-- PLAYING SERIES -->
-<div class="section" id="latest-section">
-     <div class="section-wrapper" id="section-wrapper">
+<div class="mt-24">
+     <div class="pl-[200px] pr-[110px]">
           <div class="section-header">
                Phim đang chiếu
           </div>
 
-          <div class="movies-slide row">
+          <div class="grid grid-cols-4 gap-8">
                <?php
+               $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php?status=1");
+
                if ($response) {
                     $now = date("d/m/y");
                     $index = 0;
@@ -106,7 +108,7 @@
                          $yearNow = (int) ($yearNow + 2000);
 
                          if ($year < $yearNow || ($year == $yearNow && $month < $monthNow) || ($year == $yearNow && $month == $monthNow && $day <= $dayNow)) {
-                              echo "<a href='view/page/component/?id=" . $movie->id . "' class='movie-item col-3-5 m-5 s-11 to-top show-on-scroll'>
+                              echo "<a href='view/page/component/?id=" . $movie->id . "' class='movie-item s-11 m-0 w-auto to-top show-on-scroll'>
                                    <div>
                                         <img src='" . $movie->poster_url . "' alt='" . $movie->title . "'>
                                         <div class='movie-item-content'>
@@ -125,7 +127,7 @@
                                                   </div>
                                                   <div class='movies-infor'>
                                                        <ion-icon name='cube-outline'></ion-icon>
-                                                       <span>" . explode("-", $movie->release_date)[0] . "</span>
+                                                       <span>" . $movie->age_rating . "</span>
                                                   </div>
                                              </div>
                                         </div>
@@ -136,35 +138,41 @@
                               $index++;
                          }
 
-                         if ($index > 8)
+                         if ($index > 7)
                               break;
                     }
                } else
                     echo "Không có dữ liệu";
                ?>
           </div>
+          
+          <div class="w-full flex justify-center mt-8">
+               <button class="border border-red-500 px-4 py-2">Xem tất cả phim đang chiếu</button>
+          </div>
      </div>
 </div>
 <!-- END PLAYING SERIES -->
 
 <!-- COMING SERIES -->
-<div class="section-tv" id="section-tv">
-     <div class="section-wrapper">
+<div class="mt-24">
+     <div class="pl-[200px] pr-[110px]">
           <div class="section-header">
                Phim sắp chiếu
           </div>
 
-          <div class="movies-slide row" id="tv-slider">
+          <div class="grid grid-cols-4 gap-8">
                <?php
+               $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php?status=2");
+
                if ($response) {
                     $now = date("Y-m-d");
                     $n = 0;
                     foreach ($response as $movie) {
                          $movieDate = (int) strtotime($movie->release_date);
                          $currentDate = (int) strtotime($now);
-                         
+
                          if ($movieDate > $currentDate) {
-                              echo "<a href='../component/?id=" . $movie->id . "' class='movie-item col-3-5  m-5 s-11 to-top show-on-scroll'>
+                              echo "<a href='view/page/component/?id=" . $movie->id . "' class='movie-item s-11 m-0 w-auto to-top show-on-scroll'>
                                         <div>
                                              <img src='" . $movie->poster_url . "' alt='" . $movie->title . "'>
                                              <div class='movie-item-content'>
@@ -186,7 +194,7 @@
                               $n++;
                          }
 
-                         if ($n > 5)
+                         if ($n > 4)
                               break;
                     }
                } else
@@ -196,25 +204,3 @@
      </div>
 </div>
 <!-- END COMING SERIES -->
-
-<script>
-     let rows1 = document.querySelectorAll("#latest-section .row");
-     let totalHeight1 = 0;
-
-     rows1.forEach(row => {
-          totalHeight1 += row.offsetHeight;
-     });
-
-     let latest_section = document.getElementById("latest-section");
-     latest_section.style.maxHeight = totalHeight1 + "px";
-
-     let rows2 = document.querySelectorAll("#section-tv .row");
-     let totalHeight2 = 0;
-
-     rows2.forEach(row => {
-          totalHeight2 += row.offsetHeight;
-     });
-
-     let section_tv = document.getElementById("section-tv");
-     section_tv.style.maxHeight = totalHeight2 + "px";
-</script>

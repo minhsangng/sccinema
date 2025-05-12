@@ -1,4 +1,4 @@
-<title>Đặt vé - SC Cinema | Đặt vé xem phim trực tuyến</title>
+<title>SC Cinema - Mua Vé Xem Phim</title>
 
 <div class="section">
     

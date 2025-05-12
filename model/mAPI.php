@@ -23,6 +23,28 @@ class mAPI
         return $conn->query($sql);
     }
     
+    /* Thông tin các rạp */
+    public function mExportAPICinema($sql)
+    {
+        $p = new Database;
+        $conn = $p->connect();
+        
+        if (!$conn)
+            return false;
+        return $conn->query($sql);
+    }
+    
+    /* Thông tin bắp nước */
+    public function mExportAPIFood($sql)
+    {
+        $p = new Database;
+        $conn = $p->connect();
+        
+        if (!$conn)
+            return false;
+        return $conn->query($sql);
+    }
+    
     /* Gọi API */
     public function mCallAPI($url)
     {

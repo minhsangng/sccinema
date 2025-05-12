@@ -8,7 +8,7 @@
      
      $ctrlAPI = new cAPI();
      
-     include_once("view/layout/header.html");
+     include_once("view/layout/header.php");
      
      $p = "home";
      
@@ -22,5 +22,5 @@
           include_once("view/page/404/index.php");
      else include_once("view/page/".$p."/index.php");
      
-     include_once("view/layout/footer.html");
+     include_once("view/layout/footer.php");
 ?>

@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="assets/img/ico.png">
+    <link rel="shortcut icon" href="<?= (isset($_GET["id"]) ? "../../../" : "") ?>assets/img/logo-main.png">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="src/css/component.css">
-    <link rel="stylesheet" href="src/css/style.css">
-    <link rel="stylesheet" href="src/css/grid.css">
+    <link rel="stylesheet" href="<?= (isset($_GET["id"]) ? "../../../" : "") ?>src/css/component.css">
+    <link rel="stylesheet" href="<?= (isset($_GET["id"]) ? "../../../" : "") ?>src/css/style.css">
+    <link rel="stylesheet" href="<?= (isset($_GET["id"]) ? "../../../" : "") ?>src/css/grid.css">
 
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -30,8 +30,12 @@
 
     <!-- BOX ICON  -->
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="assets/fontawesome-free-5.15.4-web/css/all.min.css"> -->
-    <!-- <link rel="stylesheet" href="themify-icons/themify-icons.css"> -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -72,11 +76,15 @@
                 width: 140px;
             }
         }
+
+        footer .section-wrapper {
+            left: 200px;
+        }
     </style>
 </head>
 
 <body>
-    <!-- NAV -->
+    <!-- NAV TABLET -->
     <div class="menu-tablet" id="menu-tablet">
         <ul class="menu-tb-list">
             <li><a href="index.php">
@@ -100,32 +108,87 @@
         </ul>
     </div>
 
+    <!-- PROCESS BUTTON -->
     <div class="progress-bar" id="progress-bar" style="z-index: 9999;">
-        <a href="javascript:void(0)" id="progress-val" onclick="
-                  let scrollInterval = setInterval(function () {
-                       if (window.scrollY !== 0) window.scrollBy(0, -window.scrollY / 10);
-                       else clearInterval(scrollInterval);
-                  }, 10);">
+        <a href="#" id="progress-val">
             <ion-icon name="arrow-up-circle-outline"></ion-icon>
         </a>
     </div>
 
+    <?php
+    if (!isset($_GET["id"])) {
+        echo '<div class="nav-wrapper z-50 shadow hover:bg-red-200/25">
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item" id="home">
+                        <a href="">
+                                <span class="nav-icon"><ion-icon name="home-outline"></ion-icon></span>
+                                Trang chủ
+                        </a>
+                    </li>
+
+                    <li class="nav-item" id="showtime">
+                        <a href="?p=showtime">
+                                <span class="nav-icon"><ion-icon name="film-outline"></ion-icon></span>
+                                Lịch chiếu </a>
+                    </li>
+                    <li class="nav-item" id="food">
+                        <a href="?p=food">
+                                <span class="nav-icon"><ion-icon name="fast-food-outline"></ion-icon></span>
+                                Bắp nước
+                        </a>
+                    </li>
+
+                    <li class="nav-item" id="ticket">
+                        <a href="?p=ticket">
+                                <span class="nav-icon"><ion-icon name="ticket-outline"></ion-icon></span>
+                                Đặt vé
+                        </a>
+                    </li>
+
+                    <li class="nav-item" id="promotion">
+                        <a href="?p=promotion">
+                                <span class="nav-icon"><ion-icon name="gift-outline"></ion-icon></span>
+                                Khuyến mãi
+                        </a>
+                    </li>
+
+                    <li class="nav-item" id="account">
+                        <a href="?p=account">
+                                <span class="nav-icon"><ion-icon name="person-outline"></ion-icon></span>
+                                Tài khoản
+                        </a>
+                    </li>
+
+                </ul>
+            </div>';
+    }
+    ?>
+
     <div class="container">
         <div class="nav flex justify-between w-screen">
             <a href="index.php" class="logo relative mr-14">
-                <img style="margin-right: 10px;" src="assets/img/ico.png" />
-                <h1 class="text-3xl absolute bottom-2 -right-20 text-[#7f1338]"> Cinema</h1>
+                <img style="margin-right: 10px;"
+                    src="<?= (isset($_GET["id"]) ? "../../../" : "") ?>assets/img/logo-main.png" />
+                <h1 class="text-3xl absolute bottom-2 -right-20 text-[#c0392c]"> Cinema</h1>
             </a>
 
             <select name="" id="" class="search-box boxoffice">
-                <option value="">Chọn rạp</option>
-                <option value="">-- -- -- --</option>
-                <option value="">SC Cinema - Gò Vấp</option>
-                <option value="">SC Cinema - Bình Thạnh</option>
+                <option value="" class="text-black">Chọn rạp</option>
+                <option value="" class="text-black">-- -- -- --</option>
+                <?php
+                $responseCinema = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPICinema.php");
+
+                if ($responseCinema) {
+                    foreach ($responseCinema as $row) {
+                        echo "<option class='text-black' value='" . $row->cinema_name . "'>" . $row->cinema_name . "</option>";
+                    }
+                } else
+                    echo "Không có dữ liệu";
+                ?>
             </select>
 
-            <form action="" method="" class="search-box">
-                <input type="text" name="search" placeholder="Tìm theo tên phim, diễn viên, ....." class="nav-search">
+            <form action="view/page/search/" method="GET" class="search-box">
+                <input type="text" name="keyword" placeholder="Tìm theo tên phim, diễn viên, ....." class="nav-search normal-case">
                 <button type="submit">
                     <i class='bx bx-search-alt'></i>
                 </button>
@@ -141,49 +204,4 @@
                 <ion-icon name="close-outline" class="close"></ion-icon>
             </div>
         </div>
-    </div>
-
-    <div class="nav-wrapper">
-        <ul class="nav-menu" id="nav-menu">
-            <li class="nav-item" id="home">
-                <a href="index.php">
-                    <span class="nav-icon"><ion-icon name="home-outline"></ion-icon></span>
-                    Trang chủ
-                </a>
-            </li>
-
-            <li class="nav-item" id="showtime">
-                <a href="index.php?p=showtime">
-                    <span class="nav-icon"><ion-icon name="film-outline"></ion-icon></span>
-                    Lịch chiếu </a>
-            </li>
-            <li class="nav-item" id="food">
-                <a href="index.php?p=food">
-                    <span class="nav-icon"><ion-icon name="fast-food-outline"></ion-icon></span>
-                    Bắp nước
-                </a>
-            </li>
-
-            <li class="nav-item" id="ticket">
-                <a href="index.php?p=ticket">
-                    <span class="nav-icon"><ion-icon name="ticket-outline"></ion-icon></span>
-                    Đặt vé
-                </a>
-            </li>
-
-            <li class="nav-item" id="promotion">
-                <a href="index.php?p=promotion">
-                    <span class="nav-icon"><ion-icon name="gift-outline"></ion-icon></span>
-                    Khuyến mãi
-                </a>
-            </li>
-
-            <li class="nav-item" id="account">
-                <a href="index.php?p=account">
-                    <span class="nav-icon"><ion-icon name="person-outline"></ion-icon></span>
-                    Tài khoản
-                </a>
-            </li>
-
-        </ul>
     </div>
