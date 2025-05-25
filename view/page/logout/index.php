@@ -2,5 +2,5 @@
 session_start();
 session_destroy();
 
-header("Location: ../signin/index.php");
+header("Location: ../../../?p=login");
 ?>

@@ -284,7 +284,6 @@ a.movie-item:hover {
      z-index: 99;
 }
 
-
 .btn::before {
      content: "";
      position: absolute;
@@ -820,8 +819,6 @@ a.movie-item:hover {
      color: var(--text-color);
 }
 
-
-
 .section-wrapper .slide-control {
      position: absolute;
      bottom: -5rem;
@@ -932,9 +929,6 @@ a.movie-item:hover {
 }
 
 #progress-val {
-     width: calc(100% - 5px);
-     height: calc(100% - 5px);
-     background-color: var(--second-color);
      border-radius: 50%;
      font-weight: 700;
      font-size: 1.4rem;

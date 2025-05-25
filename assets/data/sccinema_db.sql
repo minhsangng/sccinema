@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 12, 2025 at 06:39 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th5 25, 2025 lúc 10:08 AM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sccinema`
+-- Cơ sở dữ liệu: `sccinema`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cinemas`
+-- Cấu trúc bảng cho bảng `cinemas`
 --
 
 CREATE TABLE `cinemas` (
@@ -35,7 +35,7 @@ CREATE TABLE `cinemas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `cinemas`
+-- Đang đổ dữ liệu cho bảng `cinemas`
 --
 
 INSERT INTO `cinemas` (`id`, `name`, `address`, `status`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `cinemas` (`id`, `name`, `address`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
+-- Cấu trúc bảng cho bảng `customers`
 --
 
 CREATE TABLE `customers` (
@@ -58,7 +58,7 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `customers`
+-- Đang đổ dữ liệu cho bảng `customers`
 --
 
 INSERT INTO `customers` (`id`, `name`, `phone`, `email`, `created_at`) VALUES
@@ -71,7 +71,7 @@ INSERT INTO `customers` (`id`, `name`, `phone`, `email`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `foods`
+-- Cấu trúc bảng cho bảng `foods`
 --
 
 CREATE TABLE `foods` (
@@ -86,7 +86,7 @@ CREATE TABLE `foods` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `foods`
+-- Đang đổ dữ liệu cho bảng `foods`
 --
 
 INSERT INTO `foods` (`id`, `name`, `price`, `type`, `description`, `image_url`, `available`, `status`) VALUES
@@ -94,13 +94,13 @@ INSERT INTO `foods` (`id`, `name`, `price`, `type`, `description`, `image_url`, 
 (2, 'Bắp rang bơ lớn', 50000.00, 'food', 'Bắp rang bơ cỡ lớn dành cho 2 người', 'assets/img/foods/popcorn.png', 1, 1),
 (3, 'Pepsi 500ml', 25000.00, 'drink', 'Nước ngọt Pepsi lạnh 500ml', 'assets/img/foods/pepsi.png', 1, 1),
 (4, 'Sprite 500ml', 25000.00, 'drink', 'Nước ngọt Sprite mát lạnh 500ml', 'assets/img/foods/sprite.png', 1, 1),
-(5, 'Combo 1 (Bắp nhỏ + Pepsi)', 55000.00, 'combo', 'Combo tiết kiệm: bắp nhỏ + Pepsi 500ml', 'asses/img/foods/combo1.png', 1, 1),
-(6, 'Combo 2 (Bắp lớn + 2 nước)', 90000.00, 'combo', 'Combo cho 2 người: bắp lớn + 2 nước ngọt', 'asstes/img/foods/combo2.png', 1, 1);
+(5, 'Combo 1 (Bắp nhỏ + Pepsi)', 55000.00, 'combo', 'Combo tiết kiệm: bắp nhỏ + Pepsi 500ml', 'assets/img/foods/combo1.png', 1, 1),
+(6, 'Combo 2 (Bắp lớn + 2 nước)', 90000.00, 'combo', 'Combo cho 2 người: bắp lớn + 2 nước ngọt', 'assets/img/foods/combo2.png', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `movies`
+-- Cấu trúc bảng cho bảng `movies`
 --
 
 CREATE TABLE `movies` (
@@ -122,7 +122,7 @@ CREATE TABLE `movies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `movies`
+-- Đang đổ dữ liệu cho bảng `movies`
 --
 
 INSERT INTO `movies` (`id`, `title`, `release_date`, `genres`, `country`, `director`, `actors`, `duration`, `summary`, `poster_url`, `thumbnail_url`, `trailer_url`, `vote_average`, `age_rating`, `status`) VALUES
@@ -146,7 +146,7 @@ INSERT INTO `movies` (`id`, `title`, `release_date`, `genres`, `country`, `direc
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rooms`
+-- Cấu trúc bảng cho bảng `rooms`
 --
 
 CREATE TABLE `rooms` (
@@ -161,7 +161,7 @@ CREATE TABLE `rooms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `rooms`
+-- Đang đổ dữ liệu cho bảng `rooms`
 --
 
 INSERT INTO `rooms` (`id`, `name`, `seat_rows`, `seat_columns`, `total_seats`, `screen_type`, `status`, `cinema_id`) VALUES
@@ -174,34 +174,56 @@ INSERT INTO `rooms` (`id`, `name`, `seat_rows`, `seat_columns`, `total_seats`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `showtimes`
+-- Cấu trúc bảng cho bảng `shifts`
+--
+
+CREATE TABLE `shifts` (
+  `id` int(11) NOT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `shift_name` varchar(50) DEFAULT NULL,
+  `start_time` time DEFAULT NULL,
+  `end_time` time DEFAULT NULL,
+  `date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `shifts`
+--
+
+INSERT INTO `shifts` (`id`, `staff_id`, `shift_name`, `start_time`, `end_time`, `date`) VALUES
+(1, 2, 'Sáng', '08:00:00', '13:00:00', '2025-05-25'),
+(2, 2, 'Chiều', '13:00:00', '19:00:00', '2025-05-25');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `showtimes`
 --
 
 CREATE TABLE `showtimes` (
   `id` int(11) NOT NULL,
   `movie_id` int(11) NOT NULL,
-  `room_id` int(11) NOT NULL,
-  `show_date` date NOT NULL,
+  `room_id` int(11) DEFAULT NULL,
+  `show_date` date DEFAULT NULL,
   `start_time` time DEFAULT NULL,
-  `end_time` time DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   `status` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `showtimes`
+-- Đang đổ dữ liệu cho bảng `showtimes`
 --
 
-INSERT INTO `showtimes` (`id`, `movie_id`, `room_id`, `show_date`, `start_time`, `end_time`, `price`, `status`) VALUES
-(1, 1, 2, '2025-05-04', '12:00:00', NULL, 45000.00, 1),
-(2, 2, 1, '2025-05-04', '20:30:00', '22:15:00', 45000.00, 1),
-(3, 3, 3, '2025-05-04', '17:00:00', '19:00:00', 45000.00, 1),
-(4, 1, 1, '2025-05-04', '14:30:00', NULL, 45000.00, 1);
+INSERT INTO `showtimes` (`id`, `movie_id`, `room_id`, `show_date`, `start_time`, `price`, `status`) VALUES
+(1, 1, 2, '2025-05-24', '08:00:00', 45000.00, 1),
+(2, 2, 1, '2025-05-24', '20:30:00', 45000.00, 1),
+(3, 3, 3, '2025-05-24', '17:00:00', 45000.00, 1),
+(4, 1, 1, '2025-05-24', '14:30:00', 45000.00, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `staffs`
+-- Cấu trúc bảng cho bảng `staffs`
 --
 
 CREATE TABLE `staffs` (
@@ -219,7 +241,7 @@ CREATE TABLE `staffs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `staffs`
+-- Đang đổ dữ liệu cho bảng `staffs`
 --
 
 INSERT INTO `staffs` (`id`, `full_name`, `gender`, `birth_date`, `phone`, `email`, `password`, `position`, `salary`, `hire_date`, `status`) VALUES
@@ -231,7 +253,7 @@ INSERT INTO `staffs` (`id`, `full_name`, `gender`, `birth_date`, `phone`, `email
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tickets`
+-- Cấu trúc bảng cho bảng `tickets`
 --
 
 CREATE TABLE `tickets` (
@@ -245,7 +267,7 @@ CREATE TABLE `tickets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `tickets`
+-- Đang đổ dữ liệu cho bảng `tickets`
 --
 
 INSERT INTO `tickets` (`id`, `showtime_id`, `seat_code`, `staff_id`, `food_id`, `status`, `purchase_time`) VALUES
@@ -255,41 +277,48 @@ INSERT INTO `tickets` (`id`, `showtime_id`, `seat_code`, `staff_id`, `food_id`, 
 (4, 1, 'A7', 2, 3, 'Đã đặt', '2025-05-03 08:06:01');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `cinemas`
+-- Chỉ mục cho bảng `cinemas`
 --
 ALTER TABLE `cinemas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `customers`
+-- Chỉ mục cho bảng `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `foods`
+-- Chỉ mục cho bảng `foods`
 --
 ALTER TABLE `foods`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `movies`
+-- Chỉ mục cho bảng `movies`
 --
 ALTER TABLE `movies`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `rooms`
+-- Chỉ mục cho bảng `rooms`
 --
 ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rooms_ibfk_1` (`cinema_id`);
+
+--
+-- Chỉ mục cho bảng `shifts`
+--
+ALTER TABLE `shifts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `showtimes`
+-- Chỉ mục cho bảng `showtimes`
 --
 ALTER TABLE `showtimes`
   ADD PRIMARY KEY (`id`),
@@ -297,13 +326,13 @@ ALTER TABLE `showtimes`
   ADD KEY `room_id` (`room_id`);
 
 --
--- Indexes for table `staffs`
+-- Chỉ mục cho bảng `staffs`
 --
 ALTER TABLE `staffs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tickets`
+-- Chỉ mục cho bảng `tickets`
 --
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`id`),
@@ -311,76 +340,82 @@ ALTER TABLE `tickets`
   ADD KEY `staff_id` (`staff_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `cinemas`
+-- AUTO_INCREMENT cho bảng `cinemas`
 --
 ALTER TABLE `cinemas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `customers`
+-- AUTO_INCREMENT cho bảng `customers`
 --
 ALTER TABLE `customers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `foods`
+-- AUTO_INCREMENT cho bảng `foods`
 --
 ALTER TABLE `foods`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `movies`
+-- AUTO_INCREMENT cho bảng `movies`
 --
 ALTER TABLE `movies`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `rooms`
+-- AUTO_INCREMENT cho bảng `rooms`
 --
 ALTER TABLE `rooms`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `showtimes`
+-- AUTO_INCREMENT cho bảng `shifts`
+--
+ALTER TABLE `shifts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `showtimes`
 --
 ALTER TABLE `showtimes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `staffs`
+-- AUTO_INCREMENT cho bảng `staffs`
 --
 ALTER TABLE `staffs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `tickets`
+-- AUTO_INCREMENT cho bảng `tickets`
 --
 ALTER TABLE `tickets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `rooms`
+-- Các ràng buộc cho bảng `rooms`
 --
 ALTER TABLE `rooms`
   ADD CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`cinema_id`) REFERENCES `cinemas` (`id`);
 
 --
--- Constraints for table `showtimes`
+-- Các ràng buộc cho bảng `showtimes`
 --
 ALTER TABLE `showtimes`
   ADD CONSTRAINT `showtimes_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`),
   ADD CONSTRAINT `showtimes_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`);
 
 --
--- Constraints for table `tickets`
+-- Các ràng buộc cho bảng `tickets`
 --
 ALTER TABLE `tickets`
   ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`showtime_id`) REFERENCES `showtimes` (`id`),

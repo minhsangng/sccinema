@@ -15,12 +15,12 @@ if (isset($_GET["id"])) {
 } else if (isset($_GET["status"])) {
     $status = (int) $_GET["status"];
     if ($status == 1 && isset($_GET["top"]) && $_GET["top"] == true) {
-        $sql = "SELECT *, COUNT(ST.movie_id) AS quantity FROM movies M JOIN showtimes ST ON M.id = ST.movie_id JOIN tickets T ON ST.id  = T.showtime_id WHERE M.status = '$status' GROUP BY ST.movie_id ORDER BY quantity DESC LIMIT 3";
+        $sql = "SELECT *, COUNT(ST.movie_id) AS quantity FROM movies M JOIN showtimes ST ON M.id = ST.movie_id JOIN tickets T ON ST.id  = T.showtime_id WHERE M.status = $status GROUP BY ST.movie_id ORDER BY quantity DESC LIMIT 3";
     } else
-        $sql = "SELECT * FROM movies WHERE status = '$status'";
+        $sql = "SELECT * FROM movies WHERE status = $status";
 } else if (!isset($_GET["id"]) && !isset($_GET["status"]) && !isset($_GET["top"]) && !isset($_GET["status"]) && isset($_GET["search"])) {
     $keyword = isset($_GET["search"]) ? trim($_GET["search"]) : '';
-    $keyword = urldecode($keyword); // an toàn hơn trong vài trường hợp
+    $keyword = urldecode($keyword);
     $words = explode(" ", $keyword);
 
     // xây dựng câu truy vấn như đã sửa trước đó:
@@ -35,7 +35,7 @@ if (isset($_GET["id"])) {
     $sql .= implode(" OR ", $conditions);
 
 } else {
-    $sql = "SELECT * FROM movies";
+    $sql = "SELECT * FROM movies".(isset($_GET["sort"]) ? " ORDER BY id ".$_GET["sort"] : "");
 }
 $ctrlAPI->cExportAPIMovie($sql);
 ?>

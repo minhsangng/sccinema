@@ -1,5 +1,5 @@
-<title>Khuyến mãi - SC Cinema | Đặt vé xem phim trực tuyến</title>
+<title>Chương Trình Khuyến Mãi</title>
 
-<div class="section">
+<div class="ml-[200px] mr-[110px]">
     
 </div>

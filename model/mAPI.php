@@ -45,6 +45,28 @@ class mAPI
         return $conn->query($sql);
     }
     
+    /* Thông tin các ca làm */
+    public function mExportAPIShift($sql)
+    {
+        $p = new Database;
+        $conn = $p->connect();
+        
+        if (!$conn)
+            return false;
+        return $conn->query($sql);
+    }
+    
+    /* Thông tin nhân viên */
+    public function mExportAPIStaff($sql)
+    {
+        $p = new Database;
+        $conn = $p->connect();
+        
+        if (!$conn)
+            return false;
+        return $conn->query($sql);
+    }
+    
     /* Gọi API */
     public function mCallAPI($url)
     {

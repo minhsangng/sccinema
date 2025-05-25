@@ -1,4 +1,4 @@
-<footer class="footer mb-4">
+<footer class="footer mb-4 pt-0">
     <div class="section-wrapper static ml-[200px] mr-[110px]" style="padding: 0 22px;">
         <div class="grid grid-cols-4 border-b border-[#c0392c]">
             <div class="col-span-1 footer-header">
@@ -62,8 +62,8 @@
                 </div>
             </div>
         </div>
-        
-        <div class="grid grid-cols-2 pt-4 pb-8">
+
+        <div class="grid grid-cols-2 pt-4 pb-8 text-[#F5F5F5]">
             <div class="grid-cols-1 text-sm">
                 &copy; 2025 SCCinema. All rights reserved.
             </div>
@@ -79,9 +79,8 @@
 <script src="<?= (isset($_GET["id"]) ? "../../../" : "") ?>src/js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const navItems = document.querySelectorAll(".nav-item");
         const params = new URLSearchParams(window.location.search);
         const currentPage = params.get("p") || "home";
@@ -107,7 +106,7 @@
         let menu_toggle = document.querySelector(".menu-toggle");
 
         if (menu_toggle && menu_tablet) {
-            menu_toggle.onclick = function () {
+            menu_toggle.onclick = function() {
                 menu_toggle.classList.toggle("active");
                 menu_tablet.classList.toggle("active");
             };
@@ -161,7 +160,9 @@
             e.preventDefault();
             gsap.to(window, {
                 duration: 1,
-                scrollTo: { y: 0 },
+                scrollTo: {
+                    y: 0
+                },
                 ease: "power2.out"
             });
         });

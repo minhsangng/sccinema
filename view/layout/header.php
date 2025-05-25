@@ -38,7 +38,10 @@
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
+    <!-- CDN Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
 
     <style>
         .logo img {
@@ -77,6 +80,12 @@
             }
         }
 
+        #progress-val {
+            width: auto;
+            height: auto;
+            background-color: transparent;
+        }
+
         footer .section-wrapper {
             left: 200px;
         }
@@ -90,19 +99,19 @@
             <li><a href="index.php">
                     Trang chủ
                 </a></li>
-            <li><a href="index.php?p=showtime">
+            <li><a href="?p=showtime">
                     Lịch chiếu
                 </a></li>
-            <li><a href="index.php?p=food">
+            <li><a href="?p=food">
                     Bắp nước
                 </a></li>
-            <li><a href="index.php?p=ticket">
+            <li><a href="?p=ticket">
                     Đặt vé
                 </a></li>
-            <li><a href="index.php?p=promotion">
+            <li><a href="?p=promotion">
                     Khuyến mãi
                 </a></li>
-            <li><a href="index.php?p=account">
+            <li><a href="?p=login">
                     Tài khoản
                 </a></li>
         </ul>
@@ -111,7 +120,7 @@
     <!-- PROCESS BUTTON -->
     <div class="progress-bar" id="progress-bar" style="z-index: 9999;">
         <a href="#" id="progress-val">
-            <ion-icon name="arrow-up-circle-outline"></ion-icon>
+            <ion-icon name="arrow-up-circle-outline" class="text-white"></ion-icon>
         </a>
     </div>
 
@@ -120,7 +129,7 @@
         echo '<div class="nav-wrapper z-50 shadow hover:bg-red-200/25">
                 <ul class="nav-menu" id="nav-menu">
                     <li class="nav-item" id="home">
-                        <a href="">
+                        <a href="index.php">
                                 <span class="nav-icon"><ion-icon name="home-outline"></ion-icon></span>
                                 Trang chủ
                         </a>
@@ -152,8 +161,8 @@
                         </a>
                     </li>
 
-                    <li class="nav-item" id="account">
-                        <a href="?p=account">
+                    <li class="nav-item" id="login">
+                        <a href="?p=login">
                                 <span class="nav-icon"><ion-icon name="person-outline"></ion-icon></span>
                                 Tài khoản
                         </a>
@@ -172,30 +181,15 @@
                 <h1 class="text-3xl absolute bottom-2 -right-20 text-[#c0392c]"> Cinema</h1>
             </a>
 
-            <select name="" id="" class="search-box boxoffice">
-                <option value="" class="text-black">Chọn rạp</option>
-                <option value="" class="text-black">-- -- -- --</option>
-                <?php
-                $responseCinema = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPICinema.php");
-
-                if ($responseCinema) {
-                    foreach ($responseCinema as $row) {
-                        echo "<option class='text-black' value='" . $row->cinema_name . "'>" . $row->cinema_name . "</option>";
-                    }
-                } else
-                    echo "Không có dữ liệu";
-                ?>
-            </select>
-
             <form action="view/page/search/" method="GET" class="search-box">
-                <input type="text" name="keyword" placeholder="Tìm theo tên phim, diễn viên, ....." class="nav-search normal-case">
+                <input type="text" name="keyword" placeholder="Tìm theo tên phim, rạp, ....." class="nav-search normal-case">
                 <button type="submit">
                     <i class='bx bx-search-alt'></i>
                 </button>
             </form>
 
             <div class="nav-sign">
-                <a href="view/page/signin/index.php" class="btn btn-hover">
+                <a href="?p=login" class="btn btn-hover">
                     <span>Đăng nhập</span>
                 </a>
             </div>

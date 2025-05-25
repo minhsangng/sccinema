@@ -83,8 +83,8 @@
 
 <!-- PLAYING SERIES -->
 <div class="mt-24">
-     <div class="pl-[200px] pr-[110px]">
-          <div class="section-header">
+     <div class="pl-[200px] pr-[110px] text-white">
+          <div class="section-header text-white">
                Phim đang chiếu
           </div>
 
@@ -93,22 +93,9 @@
                $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php?status=1");
 
                if ($response) {
-                    $now = date("d/m/y");
                     $index = 0;
                     foreach ($response as $movie) {
-                         list($year, $month, $day) = explode("-", $movie->release_date);
-                         list($dayNow, $monthNow, $yearNow) = explode("/", $now);
-
-                         $day = (int) $day;
-                         $month = (int) $month;
-                         $year = (int) $year;
-
-                         $dayNow = (int) $dayNow;
-                         $monthNow = (int) $monthNow;
-                         $yearNow = (int) ($yearNow + 2000);
-
-                         if ($year < $yearNow || ($year == $yearNow && $month < $monthNow) || ($year == $yearNow && $month == $monthNow && $day <= $dayNow)) {
-                              echo "<a href='view/page/component/?id=" . $movie->id . "' class='movie-item s-11 m-0 w-auto to-top show-on-scroll'>
+                         echo "<a href='view/page/component/?id=" . $movie->id . "' class='movie-item s-11 m-0 w-auto to-top show-on-scroll'>
                                    <div>
                                         <img src='" . $movie->poster_url . "' alt='" . $movie->title . "'>
                                         <div class='movie-item-content'>
@@ -135,8 +122,7 @@
                                    
                                    <div class='movie-item-overlay'></div>
                               </a>";
-                              $index++;
-                         }
+                         $index++;
 
                          if ($index > 7)
                               break;
@@ -145,7 +131,7 @@
                     echo "Không có dữ liệu";
                ?>
           </div>
-          
+
           <div class="w-full flex justify-center mt-8">
                <button class="border border-red-500 px-4 py-2">Xem tất cả phim đang chiếu</button>
           </div>
@@ -154,25 +140,20 @@
 <!-- END PLAYING SERIES -->
 
 <!-- COMING SERIES -->
-<div class="mt-24">
-     <div class="pl-[200px] pr-[110px]">
+<div class="mt-24 mb-20">
+     <div class="pl-[200px] pr-[110px] text-white">
           <div class="section-header">
                Phim sắp chiếu
           </div>
 
           <div class="grid grid-cols-4 gap-8">
                <?php
-               $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php?status=2");
+               $responseC = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php?status=2");
 
-               if ($response) {
-                    $now = date("Y-m-d");
+               if ($responseC) {
                     $n = 0;
-                    foreach ($response as $movie) {
-                         $movieDate = (int) strtotime($movie->release_date);
-                         $currentDate = (int) strtotime($now);
-
-                         if ($movieDate > $currentDate) {
-                              echo "<a href='view/page/component/?id=" . $movie->id . "' class='movie-item s-11 m-0 w-auto to-top show-on-scroll'>
+                    foreach ($responseC as $movie) {
+                         echo "<a href='view/page/component/?id=" . $movie->id . "' class='movie-item s-11 m-0 w-auto to-top show-on-scroll'>
                                         <div>
                                              <img src='" . $movie->poster_url . "' alt='" . $movie->title . "'>
                                              <div class='movie-item-content'>
@@ -191,11 +172,10 @@
                                         
                                         <div class='movie-item-overlay'></div>
                                    </a>";
-                              $n++;
-                         }
-
+                         $n++;
+                         
                          if ($n > 4)
-                              break;
+                         break;
                     }
                } else
                     echo "Không có dữ liệu";

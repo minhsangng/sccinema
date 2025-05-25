@@ -32,7 +32,7 @@ class cAPI extends mAPI
             echo json_encode($data);
         }
     }
-    
+
     public function cCallAPI($url)
     {
         $result = $this->mCallAPI($url);
@@ -41,7 +41,7 @@ class cAPI extends mAPI
             return false;
         else return $result;
     }
-    
+
     /* Rạp */
     public function cExportAPICinema($sql)
     {
@@ -52,18 +52,13 @@ class cAPI extends mAPI
         else {
             $data = [];
             while ($row = $result->fetch_assoc()) {
-                $data[] = [
-                    "cinema_id" => $row["id"],
-                    "cinema_name" => $row["name"],
-                    "address" => $row["address"],
-                    "status" => $row["status"]
-                ];
+                $data[] = $row;
             }
 
             echo json_encode($data);
         }
     }
-    
+
     /* Bắp nước */
     public function cExportAPIFood($sql)
     {
@@ -89,7 +84,7 @@ class cAPI extends mAPI
             echo json_encode($data);
         }
     }
-    
+
     /* Lịch chiếu */
     public function cExportAPIShowtime($sql)
     {
@@ -100,33 +95,44 @@ class cAPI extends mAPI
         else {
             $data = [];
             while ($row = $result->fetch_assoc()) {
-                $data[] = [
-                    "id" => $row["id"],
-                    "movie_id" => $row["id"],
-                    "title" => $row["title"],
-                    "show_date" => $row["show_date"],
-                    "start_time" => $row["start_time"],
-                    "end_time" => $row["end_time"],
-                    "showtimes" => $row["showtimes"],
-                    "price" => $row["price"],
-                    "seat_rows" => $row["seat_rows"],
-                    "seat_columns" => $row["seat_columns"],
-                    "cinema_id" => $row["cinema_id"],
-                    "address" => $row["address"],
-                    "genres" => $row["genres"],
-                    "duration" => $row["duration"],
-                    "country" => $row["country"],
-                    "poster_url" => $row["poster_url"],
-                    "thumbnail_url" => $row["thumbnail_url"],
-                    "trailer_url" => $row["trailer_url"],
-                    "age_rating" => $row["age_rating"],
-                    "status" => $row["status"]
-                ];
+                $data[] = $row;
             }
 
             echo json_encode($data);
         }
     }
+    
+    /* Lịch làm */
+    public function cExportAPIShift($sql)
+    {
+        $result = $this->mExportAPIShift($sql);
 
+        if (!$result)
+            return false;
+        else {
+            $data = [];
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+
+            echo json_encode($data);
+        }
+    }
+    
+    /* Lịch làm */
+    public function cExportAPIStaff($sql)
+    {
+        $result = $this->mExportAPIStaff($sql);
+
+        if (!$result)
+            return false;
+        else {
+            $data = [];
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+
+            echo json_encode($data);
+        }
+    }
 }
-?>

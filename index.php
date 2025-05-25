@@ -4,9 +4,12 @@
      
      include_once("model/connect.php");
      include_once("model/mAPI.php");
+     include_once("model/mLogin.php");
      include_once("controller/cAPI.php");
+     include_once("controller/cLogin.php");
      
      $ctrlAPI = new cAPI();
+     $ctrlLogin = new cLogin();
      
      include_once("view/layout/header.php");
      
