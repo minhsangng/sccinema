@@ -103,7 +103,7 @@
         showtimes.forEach(item => {
             if (!cinemaMap[item.cinema_id]) {
                 cinemaMap[item.cinema_id] = {
-                    name: item.name,
+                    name: item.cinema_name,
                 };
             }
         });

@@ -121,6 +121,10 @@
                                    </div>
                                    
                                    <div class='movie-item-overlay'></div>
+                                   
+                                   <div>
+                                        
+                                   </div>
                               </a>";
                          $index++;
 

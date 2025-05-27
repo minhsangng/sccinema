@@ -9,7 +9,7 @@
 
             if ($responseCinema) {
                 foreach ($responseCinema as $row) {
-                    echo "<option class='text-black' value='" . $row->cinema_name . "'>" . $row->cinema_name . "</option>";
+                    echo "<option class='text-black' value='" . $row->name . "'>" . $row->name . "</option>";
                 }
             } else
                 echo "<option>Không có dữ liệu</option>";
@@ -27,10 +27,12 @@
                     echo '
                     <div class="text-white flex justify-between space-x-4">
                         <img src="'.$row->image_url.'" class="w-36 h-44 border rounded"/>
-                        <div>
-                            <h2 class="uppercase text-xl">' . $row->food_name . '</h3>
-                            <p class="h-14">'.$row->description.'</p>
-                            <p>'.number_format($row->price, 0, ",",".").' <sup>đ</sup></p>
+                        <div class="w-full flex flex-col justify-between">
+                            <div>
+                                <h2 class="uppercase text-xl text-[#bc1212]">' . $row->food_name . '</h3>
+                                <p>'.$row->description.'</p>
+                                <p>'.number_format($row->price, 0, ",",".").' <sup>đ</sup></p>
+                            </div>
                             <div class="mt-4 w-fit flex bg-white text-black px-3 py-1 rounded">
                                 <button class=" w-fit font-bold flex justify-center items-center" type="button">-</button>
                                 <input type="number" value="0" min="0" readonly class="w-12 mx-2 pl-2 pr-1 py-1 text-lg text-right outline-none">

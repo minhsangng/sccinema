@@ -10,6 +10,7 @@ $ctrlAPI = new cAPI();
 $cinemaId = isset($_GET['cinema_id']) ? (int) $_GET['cinema_id'] : null;
 $movieId = isset($_GET['movie_id']) ? (int) $_GET['movie_id'] : null;
 $date = isset($_GET['show_date']) ? $_GET['show_date'] : null;
+$showtime_id = isset($_GET["showtime_id"]) ? $_GET["showtime_id"] : null;
 
 // Trường hợp: lấy giờ chiếu cụ thể theo rạp + phim + ngày
 if ($cinemaId && $movieId && $date) {
@@ -70,8 +71,11 @@ if ($date) {
     $ctrlAPI->cExportAPIShowtime($query);
     exit;
 }
-
-
+if ($showtime_id && $movieId) {
+    $query = "SELECT ST.id AS showtime_id, C.id AS cinema_id, R.id AS room_id, M.id AS movie_id, ST.show_date, M.*, C.name, C.address, ST.start_time, R.seat_columns, R.seat_rows FROM showtimes ST JOIN movies M ON ST.movie_id = M.id JOIN rooms R ON R.id = ST.room_id JOIN cinemas C ON C.id = R.cinema_id WHERE ST.id = $showtime_id";
+} else if ($movieId && !$cinemaId) {
+    $query = "SELECT ST.id AS showtime_id, C.id AS cinema_id, R.id AS room_id, M.id AS movie_id, ST.show_date, M.*, C.name, C.address, ST.start_time, R.seat_columns, R.seat_rows FROM showtimes ST JOIN movies M ON ST.movie_id = M.id JOIN rooms R ON R.id = ST.room_id JOIN cinemas C ON C.id = R.cinema_id WHERE ST.movie_id = $movieId";
+} else
 // Mặc định: trả toàn bộ showtimes
 $query = "SELECT *, ST.status, ST.id 
           FROM showtimes ST 

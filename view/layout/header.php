@@ -182,7 +182,7 @@
             </a>
 
             <form action="view/page/search/" method="GET" class="search-box">
-                <input type="text" name="keyword" placeholder="Tìm theo tên phim, rạp, ....." class="nav-search normal-case">
+                <input type="text" name="keyword" placeholder="Tìm tên phim, rạp,..." class="nav-search normal-case">
                 <button type="submit">
                     <i class='bx bx-search-alt'></i>
                 </button>

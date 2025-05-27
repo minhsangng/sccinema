@@ -9,13 +9,13 @@
         <select id="cinema"
             class="w-[180px] text-xl sm:text-base border border-gray-300 font-semibold rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6b46c1] cursor-pointer"
             aria-label="Chọn Rạp">
-            <option hidden default selected>1. Chọn Rạp</option>
+            <option hidden value="">1. Chọn Rạp</option>
             <?php
             $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPICinema.php");
 
             if ($response) {
                 foreach ($response as $row) {
-                    echo '<option value="' . $row->cinema_id . '">' . $row->cinema_name . '</option>';
+                    echo '<option value="' . $row->id . '">' . $row->name . '</option>';
                 }
             } else echo '<option>Không có dữ liệu</option>';
             ?>
@@ -23,7 +23,7 @@
         <select id="movie" disabled
             class="w-[180px] text-xl sm:text-base border border-gray-300 font-semibold rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6b46c1] cursor-pointer"
             aria-label="Chọn Phim">
-            <option hidden default selected>2. Chọn Phim</option>
+            <option hidden value="">2. Chọn Phim</option>
             <?php
             $response = $ctrlAPI->cCallAPI("http://localhost/SCCinema/api/exportAPIMovie.php?status=1");
 
@@ -37,14 +37,14 @@
         <select id="date" disabled
             class="w-[180px] text-xl sm:text-base border border-gray-300 font-semibold rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6b46c1] cursor-pointer"
             aria-label="Chọn Ngày">
-            <option hidden default selected>3. Chọn Ngày</option>
+            <option hidden value="">3. Chọn Ngày</option>
         </select>
         <select id="time" disabled
             class="w-[180px] text-xl sm:text-base border border-gray-300 font-semibold rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#6b46c1] cursor-pointer"
             aria-label="Chọn Suất">
-            <option hidden default selected>4. Chọn Suất</option>
+            <option hidden value="">4. Chọn Suất</option>
         </select>
-        <button
+        <button id="ordernow"
             class="bg-[#6b46c1] text-white font-bold text-xl sm:text-base px-4 py-2 rounded whitespace-nowrap hover:bg-[#553c9a] transition">
             ĐẶT NGAY
         </button>
@@ -82,7 +82,7 @@
                                                 <a href="view/page/component/?id=' . $row->id . '#trailer" class="text-white text-sm flex items-center gap-1">
                                                     <i class="fas fa-play-circle text-red-500 text-2xl mr-2"></i> Xem Trailer
                                                 </a>
-                                                <button class="bg-yellow-400 text-black font-bold px-6 py-1 text-sm rounded">ĐẶT VÉ</button>
+                                                <a href="view/page/component/?id=' . $row->id . '" class="bg-yellow-400 text-black font-bold px-6 py-1 text-sm rounded">ĐẶT VÉ</a>
                                             </div>
                                         </div>
                                     </div>';
@@ -146,7 +146,7 @@
                                                 <a href="view/page/component/?id=' . $row->id . '#trailer" class="text-white text-sm flex items-center gap-1">
                                                     <i class="fas fa-play-circle text-red-500 text-2xl mr-2"></i> Xem Trailer
                                                 </a>
-                                                <button class="bg-yellow-400 text-black font-bold px-6 py-1 text-sm rounded">TÌM HIỂU</button>
+                                                <a href="view/page/component/?id=' . $row->id . '" class="bg-yellow-400 text-black font-bold px-6 py-1 text-sm rounded">TÌM HIỂU</a>
                                             </div>
                                         </div>
                                     </div>';
@@ -293,4 +293,25 @@
             return `${dayName}, ${formatted}`;
         }
     }
+
+    const ordernow = document.getElementById("ordernow");
+
+    ordernow.addEventListener('click', () => {
+        const movieId = movieSelect.value;
+        const cinemaId = cinemaSelect.value;
+        const showDate = dateSelect.value;
+        const showtime = timeSelect.value;
+
+        if (
+            cinemaId &&
+            movieId &&
+            showDate &&
+            showtime
+        ) {
+            const url = `view/page/component/?id=${movieId}&showtime_id=${showtime}`;
+            window.location.href = url;
+        } else {
+            alert("Vui lòng chọn đầy đủ RẠP, PHIM, NGÀY và GIỜ chiếu trước khi đặt vé.");
+        }
+    });
 </script>

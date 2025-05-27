@@ -11,7 +11,10 @@ $where = [];
 
 if (isset($_GET["id"])) {
     $id = (int) $_GET["id"];
-    $sql = "SELECT * FROM movies WHERE id = $id";
+    if (isset($_GET["showtime_id"])) {
+        $showtime_id = (int) $_GET["showtime_id"];
+        $sql = "SELECT ST.id AS showtime_id, C.id AS cinema_id, R.id AS room_id, M.id AS movie_id, ST.show_date, M.*, C.name, C.address FROM showtimes ST JOIN movies M ON ST.movie_id = M.id JOIN rooms R ON R.id = ST.room_id JOIN cinemas C ON C.id = R.cinema_id WHERE ST.id = $showtime_id";
+    } else $sql = "SELECT * FROM movies WHERE id = $id";
 } else if (isset($_GET["status"])) {
     $status = (int) $_GET["status"];
     if ($status == 1 && isset($_GET["top"]) && $_GET["top"] == true) {

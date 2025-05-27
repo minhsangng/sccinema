@@ -107,17 +107,17 @@ if ($ctrlLogin->cConfirmLogin($_SESSION["user"][0][2], $_SESSION["user"][0][3]) 
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="index.html" class="navbar-brand relative mx-4 mb-3">
                     <img src="../../../assets/img/logo-main.png" style="width: 50px;" alt="">
+                    <h1 class="text-2xl absolute bottom-1 -right-20 text-[#c0392c]"> Cinema</h1>
                 </a>
 
                 <div class="navbar-nav w-100">
                     <a href="index.php" class="nav-item nav-link active" id="home"><i class="fa fa-tachometer-alt me-2"></i>Tổng quan</a>
-                    <a href="?p=update" class="nav-item nav-link" id="update"><i class="fa fa-laptop me-2"></i>Cập nhật phim</a>
-                    <a href="?p=seat" class="nav-item nav-link" id="seat"><i class="fa fa-keyboard me-2"></i>Quản lý ghế</a>
-                    <a href="?p=showtime" class="nav-item nav-link" id="showtime"><i class="fa fa-table me-2"></i>Lịch chiếu</a>
-                    <a href="?p=shift" class="nav-item nav-link" id="shift"><i class="fa fa-chart-bar me-2"></i>Lịch làm việc</a>
+                    <a href="?p=update" class="nav-item nav-link" id="update"><i class="fa fa-laptop me-2"></i>Quản lý phim</a>
+                    <a href="?p=cinema" class="nav-item nav-link" id="cinema"><i class="fa fa-keyboard me-2"></i>Quản lý rạp</a>
                     <a href="?p=staff" class="nav-item nav-link" id="staff"><i class="fa fa-users me-2"></i></i>Quản lý nhân viên</a>
+                    <a href="?p=shift" class="nav-item nav-link" id="shift"><i class="fa fa-chart-bar me-2"></i>Lịch làm việc</a>
             </nav>
         </div>
         <!-- Sidebar End -->
@@ -157,7 +157,7 @@ if ($ctrlLogin->cConfirmLogin($_SESSION["user"][0][2], $_SESSION["user"][0][3]) 
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle flex items-center" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                            <img class="rounded-circle me-lg-2" src="../../../assets/img/others/user-logo.png" alt="User Logo"
                                 style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex"><?= $_SESSION["user"][0][1] ?></span>
                         </a>
@@ -311,95 +311,6 @@ if ($ctrlLogin->cConfirmLogin($_SESSION["user"][0][2], $_SESSION["user"][0][3]) 
 
             // Gọi dữ liệu của hôm nay ngay khi trang vừa load
             loadShiftForDate(moment());
-        });
-
-
-        $(document).ready(function() {
-            $.ajax({
-                url: "http://localhost/SCCinema/api/exportAPIShowtime.php",
-                method: "GET",
-                dataType: "json",
-                success: function(data) {
-                    const groupByCinema = {};
-
-                    data.forEach(item => {
-                        const cinemaName = item.name;
-                        const roomId = item.room_id;
-
-                        // Nhóm theo rạp
-                        if (!groupByCinema[cinemaName]) {
-                            groupByCinema[cinemaName] = {
-                                address: item.address,
-                                rooms: {}
-                            };
-                        }
-
-                        // Nhóm theo phòng trong rạp
-                        if (!groupByCinema[cinemaName].rooms[roomId]) {
-                            groupByCinema[cinemaName].rooms[roomId] = {
-                                screen_type: item.screen_type,
-                                seat_info: `${item.seat_rows} hàng x ${item.seat_columns} cột (${item.total_seats} ghế)`,
-                                showtimes: []
-                            };
-                        }
-
-                        groupByCinema[cinemaName].rooms[roomId].showtimes.push(item);
-                    });
-
-                    renderShowtime(groupByCinema);
-                },
-                error: function(err) {
-                    console.error("Lỗi khi tải dữ liệu lịch chiếu:", err);
-                    $("#showtimeContainer").html(`<p class="text-danger">Không thể tải lịch chiếu phim.</p>`);
-                }
-            });
-
-            function renderShowtime(groupedData) {
-                const container = $("#showtimeContainer");
-                let html = "";
-
-                for (let cinema in groupedData) {
-                    html += `
-                <div class="mb-5 border rounded p-3 shadow-sm">
-                    <h4 class="text-primary">${cinema}</h4>
-                    <p class="text-muted"><i class="bi bi-geo-alt-fill"></i> ${groupedData[cinema].address}</p>
-            `;
-
-                    for (let roomId in groupedData[cinema].rooms) {
-                        const room = groupedData[cinema].rooms[roomId];
-                        html += `
-                    <div class="ms-3 mb-4">
-                        <h5 class="text-secondary">Phòng ${roomId} - ${room.screen_type} (${room.seat_info})</h5>
-                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-                `;
-
-                        room.showtimes.forEach(show => {
-                            html += `
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="${show.poster_url}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="${show.title}">
-                                <div class="card-body">
-                                    <h6 class="card-title">${show.title}</h6>
-                                    <p class="mb-1"><strong>Thời gian:</strong> ${show.show_date} - ${show.start_time}</p>
-                                    <p class="mb-1"><strong>Định dạng:</strong> ${show.screen_type} | <strong>Giá vé:</strong> ${Number(show.price).toLocaleString()}đ</p>
-                                    <p class="mb-1"><strong>Đạo diễn:</strong> ${show.director}</p>
-                                    <p class="mb-1"><strong>Thể loại:</strong> ${show.genres}</p>
-                                    <p class="mb-1"><strong>Thời lượng:</strong> ${show.duration}</p>
-                                    <span class="badge bg-danger">${show.age_rating}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                        });
-
-                        html += `</div></div>`;
-                    }
-
-                    html += `</div>`;
-                }
-
-                container.html(html);
-            }
         });
     </script>
 </body>
